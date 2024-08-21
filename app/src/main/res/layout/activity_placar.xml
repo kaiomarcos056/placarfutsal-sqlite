@@ -8,20 +8,34 @@
     android:background="@color/black"
     tools:context=".PlacarActivity">
 
+    <Button
+        android:id="@+id/btnAddPontoA"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/botao_redondo"
+        android:text="+"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/txtPontoA"
+        app:layout_constraintEnd_toStartOf="@+id/textView5"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toEndOf="@+id/txtPontoA"
+        app:layout_constraintTop_toTopOf="@+id/txtPontoA" />
+
     <LinearLayout
-        android:id="@+id/linearLayout8"
+        android:id="@+id/linearExpulsaoA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
+        app:layout_constraintEnd_toStartOf="@+id/txtPontoA"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTimeUm"
         app:layout_constraintVertical_bias="0.25">
 
         <TextView
-            android:id="@+id/textView11"
-            android:layout_width="match_parent"
+            android:id="@+id/txtExpulsaoA"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0sp"
             android:text="Expulsão"
@@ -30,13 +44,23 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/lblExpulsaoA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2:00"
             android:textAlignment="center"
             android:textColor="#FD0005"
             android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnPlayExpulsaoA"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/botao_redondo"
+            android:text="play"
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -102,22 +126,21 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <Button
-        android:id="@+id/button10"
+        android:id="@+id/btnAddPontoB"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="32dp"
         android:background="@drawable/botao_redondo"
         android:text="+"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView5"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/txtPontoB"
+        app:layout_constraintEnd_toStartOf="@+id/txtPontoB"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="@+id/txtPontoB" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txtPontoA"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -138,14 +161,14 @@
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="100sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView6"
-        app:layout_constraintEnd_toStartOf="@+id/textView6"
+        app:layout_constraintBottom_toBottomOf="@+id/txtPontoB"
+        app:layout_constraintEnd_toStartOf="@+id/txtPontoB"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView6" />
+        app:layout_constraintStart_toEndOf="@+id/txtPontoA"
+        app:layout_constraintTop_toTopOf="@+id/txtPontoB" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/txtPontoB"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -160,18 +183,18 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout8"
+        android:id="@+id/linearExpulsaoB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintStart_toEndOf="@+id/txtPontoB"
         app:layout_constraintTop_toBottomOf="@+id/txtTimeDois2"
         app:layout_constraintVertical_bias="0.25">
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/txtExpulsaoB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0sp"
@@ -181,7 +204,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/lblExpulsaoB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2:00"
@@ -217,7 +240,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/addFaltaTime1"
+                android:id="@+id/btnAddFaltaA"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="@drawable/botao_redondo"
@@ -226,7 +249,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/txtQtdFaltaA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -246,7 +269,7 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/txtQtdFaltaB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -256,7 +279,7 @@
                 android:textSize="34sp" />
 
             <Button
-                android:id="@+id/addFaltaTime2"
+                android:id="@+id/btnAddFaltaB"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="@drawable/botao_redondo"
@@ -269,15 +292,17 @@
     <Button
         android:id="@+id/btnZerarPlacar"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/botao_contorno"
         android:paddingStart="10sp"
         android:paddingEnd="10sp"
         android:text="Zerar Placar"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/btnDesfazer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnDesfazer"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
 
     <Button
         android:id="@+id/btnDesfazer"
@@ -288,9 +313,11 @@
         android:paddingEnd="10sp"
         android:text="Desfazer"
         android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout9"
-        tools:layout_editor_absoluteY="343dp" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnZerarPlacar"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

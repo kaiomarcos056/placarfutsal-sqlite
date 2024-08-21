@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/txtPontoA"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTimeUm"
+        app:layout_constraintTop_toBottomOf="@+id/txtTimeA"
         app:layout_constraintVertical_bias="0.25">
 
         <TextView
@@ -96,7 +96,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/txtTimeUm"
+        android:id="@+id/txtTimeA"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -105,13 +105,13 @@
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/txtTimeDois2"
+        app:layout_constraintEnd_toStartOf="@+id/txtTimeB"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <TextView
-        android:id="@+id/txtTimeDois2"
+        android:id="@+id/txtTimeB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -122,7 +122,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/txtTimeUm"
+        app:layout_constraintStart_toEndOf="@+id/txtTimeA"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <Button
@@ -190,7 +190,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtPontoB"
-        app:layout_constraintTop_toBottomOf="@+id/txtTimeDois2"
+        app:layout_constraintTop_toBottomOf="@+id/txtTimeB"
         app:layout_constraintVertical_bias="0.25">
 
         <TextView

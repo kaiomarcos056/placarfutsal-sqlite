@@ -195,7 +195,7 @@
 
         <TextView
             android:id="@+id/txtExpulsaoB"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0sp"
             android:text="Expulsão"
@@ -211,6 +211,16 @@
             android:textAlignment="center"
             android:textColor="#FD0005"
             android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnPlayExpulsaoB"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/botao_redondo"
+            android:text="play"
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -318,6 +328,19 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnZerarPlacar"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
+
+    <TextView
+        android:id="@+id/txtPeriodo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="1º TEMPO"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/txtPontoB"
+        app:layout_constraintStart_toEndOf="@+id/txtPontoA"
+        app:layout_constraintTop_toBottomOf="@+id/txtTimeB" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

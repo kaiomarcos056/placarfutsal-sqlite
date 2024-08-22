@@ -5,16 +5,40 @@ import android.os.CountDownTimer
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.placarfutsal.databinding.ActivityPlacarBinding
+import java.util.Stack
+
 
 class PlacarActivity : AppCompatActivity() {
-    // VARIAVEL DO VIEW BINDING
+    // VIEW BINDING
     private lateinit var binding: ActivityPlacarBinding
 
     // VALOR INICIAL DO TEMPO DA EXPULSAO -> 2 MINUTOS EM MILISSEGUNDOS
     private val tempoExpulsao: Long = 2 * 60 * 1000
 
-    private var timerExpulsaoA : CountDownTimer? = null;
+    // VALOR INICIAL DO TEMPO DE JOGO -> 20 MINUTOS EM MILISSEGUNDOS
+    private val tempoJogo: Long = 1 * 60 * 1000 // TEMPO MENOR DE 1 MIN PARA TESTES
+    //private val tempoJogo: Long = 20 * 60 * 1000 // TEMPO ORIGINAL DE 20 MIN
 
+    // OBJETOS TIMER EXPULSAO
+    private lateinit var timerExpulsaoTimeA: TimerExpulsao // TIME A
+    private lateinit var timerExpulsaoTimeB: TimerExpulsao // TIME B
+
+    // OBJETOS CONTADOR PARA FALTA
+    private lateinit var contadorFaltaTimeA: Contador // TIME A
+    private lateinit var contadorFaltaTimeB: Contador // TIME B
+
+    // OBJETOS CONTADOR PARA PONTUAÇÃO
+    private lateinit var contadorPontoTimeA: Contador // TIME A
+    private lateinit var contadorPontoTimeB: Contador // TIME B
+
+    // PILHA PARA CRIAR HISTORICO DO PLACAR
+    private var placarHistorico: Stack<IntArray> = Stack()
+
+     // TEMPO DA PARTIDA 1º e 2º
+    private var tempoAtual = 1
+
+    // TIMER DA PARTIDA
+    private lateinit var timerPartida: CountDownTimer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,82 +59,43 @@ class PlacarActivity : AppCompatActivity() {
         // EXIBINDO O NOME DO TIME 1
         binding.txtTimeB.text = nomeTimeB
 
-        // BOTAO INCREMENTA FALTA LADO A
-        binding.btnAddFaltaA.setOnClickListener {
-            // PEGANDO VALOR ATUAL DA QUANTIDADE DE FALTAS TIME A
-            val qtdAtualFaltaA = binding.txtQtdFaltaA.text.toString().toInt()
+        // BOTAO INCREMENTA FALTA TIME A
+        contadorFaltaTimeA = Contador(textView = binding.txtQtdFaltaA) // PASSANDO VALORES PARA O OBJETO
+        binding.btnAddFaltaA.setOnClickListener { contadorFaltaTimeA.incrementar() } // CHAMANDO METODO VIA BOTAO
 
-            // ADICIONANDO +1
-            binding.txtQtdFaltaA.text = (qtdAtualFaltaA + 1).toString()
-
-        }
-
-        // BOTAO INCREMENTA FALTA LADO B
-        binding.btnAddFaltaB.setOnClickListener {
-            // PEGANDO VALOR ATUAL DA QUANTIDADE DE FALTAS TIME B
-            val qtdAtualFaltaB = binding.txtQtdFaltaB.text.toString().toInt()
-
-            // ADICIONANDO +1
-            binding.txtQtdFaltaB.text = (qtdAtualFaltaB + 1).toString()
-
-        }
-        //comentario pra commitar <3
-        //commitando de novo pra pushar
+        // BOTAO INCREMENTA FALTA TIME B
+        contadorFaltaTimeB = Contador(textView = binding.txtQtdFaltaB) // PASSANDO VALORES PARA O OBJETO
+        binding.btnAddFaltaB.setOnClickListener { contadorFaltaTimeB.incrementar() } // CHAMANDO METODO VIA BOTAO
 
         // BOTAO INCREMENTA PONTUAÇÃO TIME A
+        contadorPontoTimeA = Contador(textView = binding.txtPontoA) // PASSANDO VALORES PARA O OBJETO
         binding.btnAddPontoA.setOnClickListener {
-            // PEGANDO VALOR ATUAL DA QUANTIDADE DE PONTOS TIME A
-            val qtdAtualPontosA = binding.txtPontoA.text.toString().toInt()
-
-            // ADICIONANDO +1
-            binding.txtPontoA.text = (qtdAtualPontosA + 1).toString()
-
+            contadorPontoTimeA.incrementar() // INCREMENTANDO PONTO
+            adicionarHistorico(binding.txtPontoA, binding.txtPontoB) // SALVANDO VALORES NO HISTORICO
         }
 
         // BOTAO INCREMENTA PONTUAÇÃO TIME B
+        contadorPontoTimeB = Contador(textView = binding.txtPontoB) // PASSANDO VALORES PARA O OBJETO
         binding.btnAddPontoB.setOnClickListener {
-            // PEGANDO VALOR ATUAL DA QUANTIDADE DE PONTOS TIME B
-            val qtdAtualPontosB = binding.txtPontoB.text.toString().toInt()
-
-            // ADICIONANDO +1
-            binding.txtPontoB.text = (qtdAtualPontosB + 1).toString()
-
-        }
-
-        // TIMER TEMPO DE EXPULSÃO TIME A
-
-        // * CountDownTimer -> CLASSE DE CONTADOR REGRESSIVO NO ANDROID STUDIO
-        // CountDownTimer(TEMPO INICIAL, INTERVALO DE TEMPO EM MILISSEGUNDOS)
-        timerExpulsaoA = object : CountDownTimer(tempoExpulsao, 1000) {
-
-            // METODO SERA CHAMADO A CADA 1000 COMO FOI DEFINIDO
-            // millisUntilFinished -> PARAMETRO QUE INDICA O TEMPO RESTANTE
-            override fun onTick(millisUntilFinished: Long) {
-                // CONVERTENDO O TEMPO RESTANTE EM MINUTOS INTEIRO
-                val minutos = (millisUntilFinished / 1000) / 60
-
-                // CONVERTENDO O TEMPO RESTANTE EM SEGUNDOS INTEIRO
-                val segundos = (millisUntilFinished / 1000) % 60
-
-                // ADICIONANDO ESSES VALORES AO 'lblExpulsaoA' NO FORMATO 0:00
-                binding.lblExpulsaoA.text = String.format("%d:%02d", minutos, segundos)
-            }
-
-            // METODO QUE INFORMA O QUE O CONTADOR DEVE FAZER AO CHEGAR NO FINAL
-            override fun onFinish() {
-                // VOLTAR PARA 2 MINUTOS QUANDO O CONTADOR FINALIZAR
-                binding.lblExpulsaoA.text = "2:00"
-            }
+            contadorPontoTimeB.incrementar() // INCREMENTANDO PONTO
+            adicionarHistorico(binding.txtPontoA, binding.txtPontoB) // SALVANDO VALORES NO HISTORICO
         }
 
         // BOTAO QUE INICIA O TIMER DE EXPULSAO DO TIME A
-        binding.btnPlayExpulsaoA.setOnClickListener { (timerExpulsaoA as CountDownTimer).start() }
+        timerExpulsaoTimeA = TimerExpulsao(tempoExpulsao = tempoExpulsao, textView = binding.lblExpulsaoA, button = binding.btnPlayExpulsaoA) // PASSANDO VALORES TIMER EXPULSAO TIME A
+        binding.btnPlayExpulsaoA.setOnClickListener { timerExpulsaoTimeA.alternarTimer() }
 
+        // BOTAO QUE INICIA O TIMER DE EXPULSAO DO TIME B
+        timerExpulsaoTimeB = TimerExpulsao(tempoExpulsao = tempoExpulsao, textView = binding.lblExpulsaoB, button = binding.btnPlayExpulsaoB) // PASSANDO VALORES TIMER EXPULSAO TIME B
+        binding.btnPlayExpulsaoB.setOnClickListener { timerExpulsaoTimeB.alternarTimer() }
+
+        // BOTAO ZERAR PLACAR
         binding.btnZerarPlacar.setOnClickListener{ zerarPlacar() }
 
-        binding.btnDesfazer.setOnClickListener{ desfazer() }
+        // BOTAO DESFAZER PLACAR
+        binding.btnDesfazer.setOnClickListener{ desfazer(binding.txtPontoA, binding.txtPontoB) }
 
-        binding.btnPlay.setOnClickListener{ contarTempo() }
+        binding.btnPlay.setOnClickListener{ contarTempo(binding.txtTempo, binding.txtPeriodo) }
 
         binding.btnPause.setOnClickListener{ pausarTempo() }
     }
@@ -134,21 +119,80 @@ class PlacarActivity : AppCompatActivity() {
         //REINICIAR TEMPO GERAL JOGO
 
         //REINICIAR TEMPO DE EXPULSÃO TIME A
-        timerExpulsaoA?.cancel()
 
         //REINICIAR TEMPO DE EXPULSÃO TIME A
-       // timerExpulsaoB?.cancel()
     }
 
-    private fun desfazer() {
+    // DESFAZER PLACAR
+    private fun desfazer(txtPontoA: TextView, txtPontoB: TextView) {
+        // CASO HISTORICO NÃO ESTEJA VAZIO
+        if (placarHistorico.isNotEmpty()) {
+            // REMOVE O ULTIMO VALOR ADICIONADO
+            placarHistorico.pop()
 
+            // APOS A REMOÇÃO VERIFICA NOVAMENTE SE HISTORICO NAO ESTA VAZIO
+            if (placarHistorico.isNotEmpty()) {
+                // PEGA A PONTUAÇÃO ANTERIOR QUE AGORA É ULTIMO NOVO VALOR
+                val pontuacaoAnterior = placarHistorico.peek()
+
+                // ADICIONANDO VALORES DA PONTUAÇÃO ANTERIOR NAS LABELS
+                txtPontoA.text = pontuacaoAnterior[0].toString()
+                txtPontoB.text = pontuacaoAnterior[1].toString()
+            }
+            else{
+                // CASO HISTORICO ESTEJA VAZIO APENAS ADICIONA ZERO NAS DUAS PONTUAÇÕES
+                txtPontoA.text = "0"
+                txtPontoB.text = "0"
+            }
+        }
     }
 
-    private fun contarTempo() {
+    private fun contarTempo(txtTempo: TextView, txtPeriodo: TextView) {
 
+        txtPeriodo .text = "1º TEMPO"
+        if (tempoAtual == 2) txtPeriodo .text = "2º TEMPO"
+
+        timerPartida = object : CountDownTimer(tempoJogo, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                val minutos = millisUntilFinished / 60000
+
+                val segundos = (millisUntilFinished % 60000) / 1000
+
+                txtTempo.text = String.format("%02d:%02d", minutos, segundos)
+            }
+
+            override fun onFinish() {
+                // CASO ESTEJA NO 1º TEMPO
+                if (tempoAtual == 1) {
+                    // MUDA O TEMPO PARA O 2º TEMPO
+                    tempoAtual = 2
+
+                    // INICIA O TIMER NOVAMENTE
+                    contarTempo(txtTempo, txtPeriodo)
+                }
+                else {
+                    // FINALIZA O JOGO E SALVA O PLACAR
+                    //saveGameResult()
+
+                    // ENCERRA ESSA ACTIVITY E VOLTA PARA A ACTIVITY ANTERIOR
+                    finish()
+                }
+            }
+        }.start()
     }
 
     private fun pausarTempo() {
+        timerPartida.cancel()
+    }
 
+    // ADICIONAR VALORES AO HISTORICO
+    private fun adicionarHistorico(txtPontoA: TextView, txtPontoB: TextView){
+        val pontoTimeA = txtPontoA.text.toString().toInt()
+        val pontoTimeB = txtPontoB.text.toString().toInt()
+
+        val pontuacaoAtual = intArrayOf(pontoTimeA, pontoTimeB)
+
+        placarHistorico.push(pontuacaoAtual)
     }
 }

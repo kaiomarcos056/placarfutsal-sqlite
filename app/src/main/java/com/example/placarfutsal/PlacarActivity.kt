@@ -54,6 +54,7 @@ class PlacarActivity : AppCompatActivity() {
             binding.txtQtdFaltaB.text = (qtdAtualFaltaB + 1).toString()
 
         }
+        //comentario pra commitar <3
 
         // BOTAO INCREMENTA PONTUAÇÃO TIME A
         binding.btnAddPontoA.setOnClickListener {

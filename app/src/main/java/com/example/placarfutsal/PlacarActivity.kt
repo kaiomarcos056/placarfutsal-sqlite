@@ -55,6 +55,7 @@ class PlacarActivity : AppCompatActivity() {
 
         }
         //comentario pra commitar <3
+        //commitando de novo pra pushar
 
         // BOTAO INCREMENTA PONTUAÇÃO TIME A
         binding.btnAddPontoA.setOnClickListener {

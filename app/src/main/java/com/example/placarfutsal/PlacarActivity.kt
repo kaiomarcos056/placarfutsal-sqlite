@@ -1,13 +1,9 @@
 package com.example.placarfutsal
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
-import androidx.activity.enableEdgeToEdge
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.placarfutsal.databinding.ActivityMainBinding
 import com.example.placarfutsal.databinding.ActivityPlacarBinding
 
 class PlacarActivity : AppCompatActivity() {
@@ -17,12 +13,27 @@ class PlacarActivity : AppCompatActivity() {
     // VALOR INICIAL DO TEMPO DA EXPULSAO -> 2 MINUTOS EM MILISSEGUNDOS
     private val tempoExpulsao: Long = 2 * 60 * 1000
 
+    private var timerExpulsaoA : CountDownTimer? = null;
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // INICIALIZANDO O VIEW BINDING
         binding = ActivityPlacarBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // RECUPERANDO O NOME DO TIME 1
+        val nomeTimeA = intent.getStringExtra("nomeTimeA")
+
+        // EXIBINDO O NOME DO TIME 1
+        binding.txtTimeA.text = nomeTimeA
+
+        // RECUPERANDO O NOME DO TIME 1
+        val nomeTimeB = intent.getStringExtra("nomeTimeB")
+
+        // EXIBINDO O NOME DO TIME 1
+        binding.txtTimeB.text = nomeTimeB
 
         // BOTAO INCREMENTA FALTA LADO A
         binding.btnAddFaltaA.setOnClickListener {
@@ -43,6 +54,8 @@ class PlacarActivity : AppCompatActivity() {
             binding.txtQtdFaltaB.text = (qtdAtualFaltaB + 1).toString()
 
         }
+        //comentario pra commitar <3
+        //commitando de novo pra pushar
 
         // BOTAO INCREMENTA PONTUAÇÃO TIME A
         binding.btnAddPontoA.setOnClickListener {
@@ -68,7 +81,7 @@ class PlacarActivity : AppCompatActivity() {
 
         // * CountDownTimer -> CLASSE DE CONTADOR REGRESSIVO NO ANDROID STUDIO
         // CountDownTimer(TEMPO INICIAL, INTERVALO DE TEMPO EM MILISSEGUNDOS)
-        val timerExpulsaoA = object : CountDownTimer(tempoExpulsao, 1000) {
+        timerExpulsaoA = object : CountDownTimer(tempoExpulsao, 1000) {
 
             // METODO SERA CHAMADO A CADA 1000 COMO FOI DEFINIDO
             // millisUntilFinished -> PARAMETRO QUE INDICA O TEMPO RESTANTE
@@ -91,10 +104,7 @@ class PlacarActivity : AppCompatActivity() {
         }
 
         // BOTAO QUE INICIA O TIMER DE EXPULSAO DO TIME A
-        binding.btnPlayExpulsaoA.setOnClickListener { timerExpulsaoA.start() }
-
-
-
+        binding.btnPlayExpulsaoA.setOnClickListener { (timerExpulsaoA as CountDownTimer).start() }
 
         binding.btnZerarPlacar.setOnClickListener{ zerarPlacar() }
 
@@ -105,8 +115,29 @@ class PlacarActivity : AppCompatActivity() {
         binding.btnPause.setOnClickListener{ pausarTempo() }
     }
 
-    private fun zerarPlacar(){
 
+    private fun zerarPlacar(){
+        //função pra zerar o placar, as faltas, o tempo de expulsão caso esteja rodando, e o tempo do jogo.
+
+        //ZERAR PLACAR TIME A
+        binding.txtPontoA.text = "0"
+
+        //ZERAR PLACAR TIME B
+        binding.txtPontoB.text = "0"
+
+        //ZERAR FALTAS TIME A
+        binding.txtQtdFaltaA.text="0"
+
+        //ZERAR FALTAS TIME B
+        binding.txtQtdFaltaB.text="0"
+
+        //REINICIAR TEMPO GERAL JOGO
+
+        //REINICIAR TEMPO DE EXPULSÃO TIME A
+        timerExpulsaoA?.cancel()
+
+        //REINICIAR TEMPO DE EXPULSÃO TIME A
+       // timerExpulsaoB?.cancel()
     }
 
     private fun desfazer() {

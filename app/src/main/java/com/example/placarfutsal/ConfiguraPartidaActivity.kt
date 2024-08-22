@@ -26,6 +26,13 @@ class ConfiguraPartidaActivity : AppCompatActivity() {
     private fun iniciarPartida(){
         // INTENTE PARA ABRIR UMA NOVA ACTIVITY
         val intent = Intent(this, PlacarActivity::class.java)
+
+        val nomeTimeA = binding.lblTimeUm.text.toString()
+        intent.putExtra("nomeTimeA", nomeTimeA)
+
+        val nomeTimeB = binding.lblTimeDois.text.toString()
+        intent.putExtra("nomeTimeB", nomeTimeB)
+
         startActivity(intent)
     }
 }

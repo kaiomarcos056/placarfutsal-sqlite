@@ -195,4 +195,22 @@ class PlacarActivity : AppCompatActivity() {
 
         placarHistorico.push(pontuacaoAtual)
     }
+
+//    private fun salvarDados() {
+//
+//        val placarTimeUm: String = binding.txtPontoA.getText().toString()
+//        val nomeTimeUm: String = binding.txtTimeA.getText().toString()
+//        val placarTimeDois: String = binding.txtPontoB.getText().toString()
+//        val nomeTimeDois: String = binding.txtTimeB.getText().toString()
+//
+//        val sharedPref = getSharedPreferences(
+//            //getString(R.string.preference_file_key), MODE_PRIVATE
+//        )
+//
+//        val editor = sharedPref.edit()
+//        editor.putString("nome", nome)
+//        editor.putString("altura", altura)
+//        editor.commit()
+//    }
+
 }

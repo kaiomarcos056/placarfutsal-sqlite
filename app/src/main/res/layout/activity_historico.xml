@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
     tools:context=".HistoricoActivity">
+    //commmitando de novo
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

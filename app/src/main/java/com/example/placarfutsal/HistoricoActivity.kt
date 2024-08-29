@@ -1,5 +1,6 @@
 package com.example.placarfutsal
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -28,4 +29,12 @@ class HistoricoActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
+
+    private fun recuperarDados() {
+        //val sharedPref = getSharedPreferences(getString(R.string.dados), Context.MODE_PRIVATE)
+        //val defaultValue = resources.getInteger(R.string.nomeTimeA)
+        //val highScore = sharedPref.getInt(getString(R.string.saved_high_score_key), defaultValue)
+
+    }
 }
+

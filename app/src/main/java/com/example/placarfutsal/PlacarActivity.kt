@@ -1,10 +1,13 @@
 package com.example.placarfutsal
 
+import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.placarfutsal.databinding.ActivityPlacarBinding
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.Stack
 
 
@@ -98,6 +101,8 @@ class PlacarActivity : AppCompatActivity() {
         binding.btnPlay.setOnClickListener{ contarTempo(binding.txtTempo, binding.txtPeriodo) }
 
         binding.btnPause.setOnClickListener{ pausarTempo() }
+
+        binding.btnSalvar.setOnClickListener { salvarDados() }
     }
 
 
@@ -196,21 +201,46 @@ class PlacarActivity : AppCompatActivity() {
         placarHistorico.push(pontuacaoAtual)
     }
 
-//    private fun salvarDados() {
-//
-//        val placarTimeUm: String = binding.txtPontoA.getText().toString()
-//        val nomeTimeUm: String = binding.txtTimeA.getText().toString()
-//        val placarTimeDois: String = binding.txtPontoB.getText().toString()
-//        val nomeTimeDois: String = binding.txtTimeB.getText().toString()
-//
-//        val sharedPref = getSharedPreferences(
-//            //getString(R.string.preference_file_key), MODE_PRIVATE
-//        )
-//
-//        val editor = sharedPref.edit()
-//        editor.putString("nome", nome)
-//        editor.putString("altura", altura)
-//        editor.commit()
-//    }
+    private fun salvarDados() {
+        val nomeTimeA = binding.txtTimeA.text.toString()
+        val nomeTimeB= binding.txtTimeB.text.toString()
+        val pontoTimeA = binding.txtPontoA.text.toString()
+        val pontoTimeB= binding.txtPontoB.text.toString()
 
+        val dadosPartida = JSONObject()
+        dadosPartida.put("nome_time_a", nomeTimeA)
+        dadosPartida.put("nome_time_b", nomeTimeB)
+        dadosPartida.put("ponto_time_a", pontoTimeA)
+        dadosPartida.put("ponto_time_b", pontoTimeB)
+
+        // Usando getSharedPreferences para armazenar os dados
+        val sharedPref = getSharedPreferences(getString(R.string.dados), Context.MODE_PRIVATE)
+
+        val editor = sharedPref.edit()
+
+        val historicoStr = sharedPref.getString("historico", null)
+        var historioJSONArray = JSONArray()
+        if (historicoStr != null){
+            historioJSONArray = JSONArray(historicoStr)
+        }
+
+        historioJSONArray.put(dadosPartida)
+
+        editor.putString("historico", historioJSONArray.toString())
+
+        editor.apply()
+
+        println(historicoStr)
+
+
+        // Editando o SharedPreferences para salvar os valores
+        //with(sharedPref.edit()) {
+        //putString("pontoTimeA", pontoTimeA)
+        //putString("pontoTimeB", pontoTimeB)
+        //putString("nomeTimeA" , nomeTimeA)
+        //putString("nomeTimeB" , nomeTimeB)
+
+        //apply()
+        //}
+    }
 }

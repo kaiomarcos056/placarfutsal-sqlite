@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun historico() {
         //Ir p tela historico
-        val intent = Intent(this, HistoricoActivity::class.java)
+        //val intent = Intent(this, HistoricoActivity::class.java)
+        val intent = Intent(this, TesteActivity::class.java)
         startActivity(intent)
     }
 

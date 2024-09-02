@@ -3,38 +3,47 @@ package com.example.placarfutsal
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.placarfutsal.databinding.ActivityHistoricoBinding
-import com.example.placarfutsal.databinding.ActivityMainBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.placarfutsal.databinding.ActivityTesteBinding
+import org.json.JSONArray
+import org.json.JSONObject
 
-class HistoricoActivity : AppCompatActivity() {
+class TesteActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityHistoricoBinding
+    private lateinit var binding: ActivityTesteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = ActivityHistoricoBinding.inflate(layoutInflater)
+        binding = ActivityTesteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initRecyclerView()
+        getDados()
+        binding.btnVoltar.setOnClickListener{ finish()}
 
-        binding.btnVoltar.setOnClickListener{ voltar()
+    }
+
+    private fun initRecyclerView(){
+        binding.recyclerViewHistorico.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewHistorico.setHasFixedSize(true)
+        binding.recyclerViewHistorico.adapter = AdapterPartida(getDados())
+    }
+
+    private fun getDados(): MutableList<JSONObject> {
+        val listaPartidas: MutableList<JSONObject> = mutableListOf()
+
+        val sharedPref = getSharedPreferences(getString(R.string.dados), Context.MODE_PRIVATE)
+        val historicoStr = sharedPref.getString("historico", null)
+
+        var historicoJSONArray = JSONArray()
+
+        if (historicoStr != null) { historicoJSONArray = JSONArray(historicoStr) }
+
+        for (i in 0 until historicoJSONArray.length()) {
+            val dadosPartida = historicoJSONArray.getJSONObject(i)
+            listaPartidas.add(dadosPartida)
         }
-    }
 
-    private fun voltar(){
-        //Voltar p tela inicial
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun recuperarDados() {
-        //val sharedPref = getSharedPreferences(getString(R.string.dados), Context.MODE_PRIVATE)
-        //val defaultValue = resources.getInteger(R.string.nomeTimeA)
-        //val highScore = sharedPref.getInt(getString(R.string.saved_high_score_key), defaultValue)
-
+        return listaPartidas
     }
 }
-

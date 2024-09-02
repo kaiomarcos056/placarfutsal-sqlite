@@ -19,8 +19,8 @@ class PlacarActivity : AppCompatActivity() {
     private val tempoExpulsao: Long = 2 * 60 * 1000
 
     // VALOR INICIAL DO TEMPO DE JOGO -> 20 MINUTOS EM MILISSEGUNDOS
-    private val tempoJogo: Long = 1 * 60 * 1000 // TEMPO MENOR DE 1 MIN PARA TESTES
-    //private val tempoJogo: Long = 20 * 60 * 1000 // TEMPO ORIGINAL DE 20 MIN
+    //private val tempoJogo: Long = 1 * 60 * 1000 // TEMPO MENOR DE 1 MIN PARA TESTES
+    private val tempoJogo: Long = 20 * 60 * 1000 // TEMPO ORIGINAL DE 20 MIN
 
     // OBJETOS TIMER EXPULSAO
     private lateinit var timerExpulsaoTimeA: TimerExpulsao // TIME A
@@ -103,6 +103,8 @@ class PlacarActivity : AppCompatActivity() {
         binding.btnPause.setOnClickListener{ pausarTempo() }
 
         binding.btnSalvar.setOnClickListener { salvarDados() }
+
+        binding.btnVoltar.setOnClickListener { finish() }
     }
 
 
@@ -232,15 +234,5 @@ class PlacarActivity : AppCompatActivity() {
 
         println(historicoStr)
 
-
-        // Editando o SharedPreferences para salvar os valores
-        //with(sharedPref.edit()) {
-        //putString("pontoTimeA", pontoTimeA)
-        //putString("pontoTimeB", pontoTimeB)
-        //putString("nomeTimeA" , nomeTimeA)
-        //putString("nomeTimeB" , nomeTimeB)
-
-        //apply()
-        //}
     }
 }

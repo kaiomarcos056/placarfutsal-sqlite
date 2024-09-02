@@ -21,6 +21,8 @@ class ConfiguraPartidaActivity : AppCompatActivity() {
 
         binding.btnIniciarPlacar.setOnClickListener { iniciarPartida() }
 
+        binding.btnVoltar.setOnClickListener { finish() }
+
     }
 
     private fun iniciarPartida(){

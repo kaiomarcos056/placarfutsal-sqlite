@@ -69,11 +69,11 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/voltar"
+        android:id="@+id/btnVoltar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/button_border"
         android:text="Voltar"
         android:textColor="@color/white"

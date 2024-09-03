@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PlacarFutsal</string>
+    <string name="dados">com.example.placarfutsal.dados</string>
+
 </resources>

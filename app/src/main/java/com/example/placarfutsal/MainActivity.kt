@@ -1,12 +1,11 @@
 package com.example.placarfutsal
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.placarfutsal.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,7 +30,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun historico() {
         //Ir p tela historico
-        val intent = Intent(this, HistoricoActivity::class.java)
+        //val intent = Intent(this, HistoricoActivity::class.java)
+        val intent = Intent(this, TesteActivity::class.java)
         startActivity(intent)
     }
+
 }

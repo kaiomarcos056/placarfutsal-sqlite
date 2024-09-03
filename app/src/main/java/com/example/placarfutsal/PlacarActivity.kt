@@ -1,10 +1,13 @@
 package com.example.placarfutsal
 
+import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.placarfutsal.databinding.ActivityPlacarBinding
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.Stack
 
 
@@ -16,8 +19,8 @@ class PlacarActivity : AppCompatActivity() {
     private val tempoExpulsao: Long = 2 * 60 * 1000
 
     // VALOR INICIAL DO TEMPO DE JOGO -> 20 MINUTOS EM MILISSEGUNDOS
-    private val tempoJogo: Long = 1 * 60 * 1000 // TEMPO MENOR DE 1 MIN PARA TESTES
-    //private val tempoJogo: Long = 20 * 60 * 1000 // TEMPO ORIGINAL DE 20 MIN
+    //private val tempoJogo: Long = 1 * 60 * 1000 // TEMPO MENOR DE 1 MIN PARA TESTES
+    private val tempoJogo: Long = 20 * 60 * 1000 // TEMPO ORIGINAL DE 20 MIN
 
     // OBJETOS TIMER EXPULSAO
     private lateinit var timerExpulsaoTimeA: TimerExpulsao // TIME A
@@ -98,6 +101,10 @@ class PlacarActivity : AppCompatActivity() {
         binding.btnPlay.setOnClickListener{ contarTempo(binding.txtTempo, binding.txtPeriodo) }
 
         binding.btnPause.setOnClickListener{ pausarTempo() }
+
+        binding.btnSalvar.setOnClickListener { salvarDados() }
+
+        binding.btnVoltar.setOnClickListener { finish() }
     }
 
 
@@ -194,5 +201,38 @@ class PlacarActivity : AppCompatActivity() {
         val pontuacaoAtual = intArrayOf(pontoTimeA, pontoTimeB)
 
         placarHistorico.push(pontuacaoAtual)
+    }
+
+    private fun salvarDados() {
+        val nomeTimeA = binding.txtTimeA.text.toString()
+        val nomeTimeB= binding.txtTimeB.text.toString()
+        val pontoTimeA = binding.txtPontoA.text.toString()
+        val pontoTimeB= binding.txtPontoB.text.toString()
+
+        val dadosPartida = JSONObject()
+        dadosPartida.put("nome_time_a", nomeTimeA)
+        dadosPartida.put("nome_time_b", nomeTimeB)
+        dadosPartida.put("ponto_time_a", pontoTimeA)
+        dadosPartida.put("ponto_time_b", pontoTimeB)
+
+        // Usando getSharedPreferences para armazenar os dados
+        val sharedPref = getSharedPreferences(getString(R.string.dados), Context.MODE_PRIVATE)
+
+        val editor = sharedPref.edit()
+
+        val historicoStr = sharedPref.getString("historico", null)
+        var historioJSONArray = JSONArray()
+        if (historicoStr != null){
+            historioJSONArray = JSONArray(historicoStr)
+        }
+
+        historioJSONArray.put(dadosPartida)
+
+        editor.putString("historico", historioJSONArray.toString())
+
+        editor.apply()
+
+        println(historicoStr)
+
     }
 }

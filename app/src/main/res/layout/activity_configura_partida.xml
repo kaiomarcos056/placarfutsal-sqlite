@@ -5,10 +5,11 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00124C"
+    android:background="@drawable/background_gradient"
     tools:context=".ConfiguraPartidaActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -22,8 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1º Time"
-            android:textSize="20sp"
             android:textColor="@color/white"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
@@ -31,19 +32,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
-            android:textColor="@color/white"
+            android:backgroundTint="@color/white"
             android:ems="10"
             android:inputType="text"
-            android:backgroundTint="@color/white"
-            android:text="Name" />
+            android:text="Name"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/txtTimeDois"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2º Time"
-            android:textSize="20sp"
             android:textColor="@color/white"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
@@ -51,20 +52,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
+            android:backgroundTint="@color/white"
             android:ems="10"
             android:inputType="text"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/white"
-            android:text="Name" />
+            android:text="Name"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btnIniciarPlacar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/botao_redondo"
             android:text="Iniciar Partida"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:background="@drawable/button_border"
-            />
+            android:textColor="#142359"
+            android:textSize="20sp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_border"
+        android:text="Voltar"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

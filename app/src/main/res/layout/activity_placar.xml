@@ -299,6 +299,20 @@
         </LinearLayout>
     </LinearLayout>
 
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_border"
+        android:text="Voltar"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearExpulsaoA"
+        app:layout_constraintStart_toStartOf="@+id/linearExpulsaoA" />
+
     <Button
         android:id="@+id/btnZerarPlacar"
         android:layout_width="wrap_content"
@@ -313,6 +327,19 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
+
+    <Button
+        android:id="@+id/btnSalvar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_border"
+        android:text="Salvar"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearExpulsaoB"
+        app:layout_constraintStart_toStartOf="@+id/linearExpulsaoB" />
 
     <Button
         android:id="@+id/btnDesfazer"

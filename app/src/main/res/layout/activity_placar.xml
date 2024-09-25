@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="#000928"
     tools:context=".PlacarActivity">
 
     <Button
@@ -27,21 +27,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/txtPontoA"
         app:layout_constraintEnd_toStartOf="@+id/txtPontoA"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTimeA"
-        app:layout_constraintVertical_bias="0.25">
+        app:layout_constraintTop_toTopOf="@+id/txtPontoA">
 
         <TextView
             android:id="@+id/txtExpulsaoA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0sp"
-            android:text="Expulsão"
+            android:text="EXPULSÃO"
             android:textAlignment="center"
-            android:textColor="#FD0005"
-            android:textSize="14sp" />
+            android:textColor="#cf1031"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lblExpulsaoA"
@@ -49,8 +49,9 @@
             android:layout_height="wrap_content"
             android:text="2:00"
             android:textAlignment="center"
-            android:textColor="#FD0005"
-            android:textSize="24sp" />
+            android:textColor="#cf1031"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnPlayExpulsaoA"
@@ -67,16 +68,21 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#14235A"
+        android:background="#00124C"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/btnPause"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/txtTimeA"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24sp"
-            app:srcCompat="@android:drawable/ic_media_pause" />
+            android:layout_weight="1"
+            android:padding="5sp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtTempo"
@@ -84,46 +90,22 @@
             android:layout_height="wrap_content"
             android:text="20:00"
             android:textColor="#FFFFFF"
-            android:textSize="34sp" />
+            android:textSize="34sp"
+            android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/btnPlay"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/txtTimeB"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24sp"
-            app:srcCompat="@android:drawable/ic_media_play" />
+            android:layout_weight="1"
+            android:padding="5sp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/txtTimeA"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="5sp"
-        android:text="TextView"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/txtTimeB"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <TextView
-        android:id="@+id/txtTimeB"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="5sp"
-        android:text="TextView"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/txtTimeA"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <Button
         android:id="@+id/btnAddPontoB"
@@ -142,15 +124,16 @@
     <TextView
         android:id="@+id/txtPontoA"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
         android:includeFontPadding="false"
         android:text="0"
-        android:textColor="#2545C0"
-        android:textSize="200sp"
+        android:textColor="#d0b010"
+        android:textSize="170sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
 
     <TextView
         android:id="@+id/textView5"
@@ -170,16 +153,17 @@
     <TextView
         android:id="@+id/txtPontoB"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
         android:includeFontPadding="false"
         android:text="0"
-        android:textColor="#2545C0"
-        android:textSize="200sp"
+        android:textColor="#d0b010"
+        android:textSize="170sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
 
 
     <LinearLayout
@@ -187,21 +171,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/txtPontoB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtPontoB"
-        app:layout_constraintTop_toBottomOf="@+id/txtTimeB"
-        app:layout_constraintVertical_bias="0.25">
+        app:layout_constraintTop_toTopOf="@+id/txtPontoB">
 
         <TextView
             android:id="@+id/txtExpulsaoB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0sp"
-            android:text="Expulsão"
+            android:text="EXPULSÃO"
             android:textAlignment="center"
-            android:textColor="#FD0005"
-            android:textSize="14sp" />
+            android:textColor="#cf1031"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lblExpulsaoB"
@@ -209,8 +193,9 @@
             android:layout_height="wrap_content"
             android:text="2:00"
             android:textAlignment="center"
-            android:textColor="#FD0005"
-            android:textSize="24sp" />
+            android:textColor="#cf1031"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnPlayExpulsaoB"
@@ -226,21 +211,23 @@
     <LinearLayout
         android:id="@+id/linearLayout9"
         android:layout_width="200dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5">
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintVertical_bias="0.1">
 
         <TextView
             android:id="@+id/textView13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Faltas"
+            android:text="FALTAS"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -265,8 +252,9 @@
                 android:layout_weight="1"
                 android:text="0"
                 android:textAlignment="center"
-                android:textColor="#FD0005"
-                android:textSize="34sp" />
+                android:textColor="#cf1031"
+                android:textSize="34sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView16"
@@ -285,8 +273,9 @@
                 android:layout_weight="1"
                 android:text="0"
                 android:textAlignment="center"
-                android:textColor="#FD0005"
-                android:textSize="34sp" />
+                android:textColor="#cf1031"
+                android:textSize="34sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnAddFaltaB"
@@ -305,13 +294,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/button_border"
         android:text="Voltar"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/btnZerarPlacar"
         app:layout_constraintEnd_toEndOf="@+id/linearExpulsaoA"
-        app:layout_constraintStart_toStartOf="@+id/linearExpulsaoA" />
+        app:layout_constraintStart_toStartOf="@+id/linearExpulsaoA"
+        app:layout_constraintTop_toTopOf="@+id/btnZerarPlacar" />
 
     <Button
         android:id="@+id/btnZerarPlacar"
@@ -326,20 +315,21 @@
         app:layout_constraintEnd_toStartOf="@+id/btnDesfazer"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9"
+        app:layout_constraintVertical_bias="0.5" />
 
     <Button
         android:id="@+id/btnSalvar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/button_border"
         android:text="Salvar"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDesfazer"
         app:layout_constraintEnd_toEndOf="@+id/linearExpulsaoB"
-        app:layout_constraintStart_toStartOf="@+id/linearExpulsaoB" />
+        app:layout_constraintStart_toStartOf="@+id/linearExpulsaoB"
+        app:layout_constraintTop_toTopOf="@+id/btnDesfazer" />
 
     <Button
         android:id="@+id/btnDesfazer"
@@ -354,20 +344,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnZerarPlacar"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9"
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
         android:id="@+id/txtPeriodo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="1º TEMPO"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/txtPontoB"
-        app:layout_constraintStart_toEndOf="@+id/txtPontoA"
-        app:layout_constraintTop_toBottomOf="@+id/txtTimeB" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INICIAR PARTIDA"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPeriodo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

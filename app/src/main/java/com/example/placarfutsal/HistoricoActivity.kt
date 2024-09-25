@@ -1,49 +1,30 @@
 package com.example.placarfutsal
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.placarfutsal.databinding.ActivityTesteBinding
-import org.json.JSONArray
-import org.json.JSONObject
+import com.example.placarfutsal.databinding.ActivityHistoricoBinding
 
-class TesteActivity : AppCompatActivity() {
+class HistoricoActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTesteBinding
+    private lateinit var binding: ActivityHistoricoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTesteBinding.inflate(layoutInflater)
+        binding = ActivityHistoricoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initRecyclerView()
-        getDados()
-        binding.btnVoltar.setOnClickListener{ finish()}
 
+        val partidaDAO = PartidaDAO(this)
+        val partidas: ArrayList<Partida> = partidaDAO.getAll()
+
+        initRecyclerView(partidas)
+
+        binding.btnVoltar.setOnClickListener{ finish() }
     }
 
-    private fun initRecyclerView(){
+    private fun initRecyclerView(partidas: ArrayList<Partida>){
         binding.recyclerViewHistorico.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewHistorico.setHasFixedSize(true)
-        binding.recyclerViewHistorico.adapter = AdapterPartida(getDados())
-    }
-
-    private fun getDados(): MutableList<JSONObject> {
-        val listaPartidas: MutableList<JSONObject> = mutableListOf()
-
-        val sharedPref = getSharedPreferences(getString(R.string.dados), Context.MODE_PRIVATE)
-        val historicoStr = sharedPref.getString("historico", null)
-
-        var historicoJSONArray = JSONArray()
-
-        if (historicoStr != null) { historicoJSONArray = JSONArray(historicoStr) }
-
-        for (i in 0 until historicoJSONArray.length()) {
-            val dadosPartida = historicoJSONArray.getJSONObject(i)
-            listaPartidas.add(dadosPartida)
-        }
-
-        return listaPartidas
+        binding.recyclerViewHistorico.adapter = AdapterPartida(partidas)
     }
 }

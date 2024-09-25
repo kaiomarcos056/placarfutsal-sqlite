@@ -1,13 +1,15 @@
 package com.example.placarfutsal
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.placarfutsal.databinding.ActivityPlacarBinding
-import org.json.JSONArray
-import org.json.JSONObject
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.TextStyle
+import java.util.Locale
 import java.util.Stack
 
 
@@ -19,8 +21,10 @@ class PlacarActivity : AppCompatActivity() {
     private val tempoExpulsao: Long = 2 * 60 * 1000
 
     // VALOR INICIAL DO TEMPO DE JOGO -> 20 MINUTOS EM MILISSEGUNDOS
-    //private val tempoJogo: Long = 1 * 60 * 1000 // TEMPO MENOR DE 1 MIN PARA TESTES
-    private val tempoJogo: Long = 20 * 60 * 1000 // TEMPO ORIGINAL DE 20 MIN
+    private val tempoJogo: Long = 1 * 60 * 1000 // TEMPO MENOR DE 1 MIN PARA TESTES
+    //private var tempoJogo: Long = 20 * 60 * 1000 // TEMPO ORIGINAL DE 20 MIN
+    private var isPausado = true
+    private var tempoRestante = tempoJogo // Tempo inicial
 
     // OBJETOS TIMER EXPULSAO
     private lateinit var timerExpulsaoTimeA: TimerExpulsao // TIME A
@@ -42,6 +46,8 @@ class PlacarActivity : AppCompatActivity() {
 
     // TIMER DA PARTIDA
     private lateinit var timerPartida: CountDownTimer
+
+    private lateinit var partidaDAO: PartidaDAO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,12 +104,34 @@ class PlacarActivity : AppCompatActivity() {
         // BOTAO DESFAZER PLACAR
         binding.btnDesfazer.setOnClickListener{ desfazer(binding.txtPontoA, binding.txtPontoB) }
 
-        binding.btnPlay.setOnClickListener{ contarTempo(binding.txtTempo, binding.txtPeriodo) }
+        binding.btnPlay.setOnClickListener{
+            //contarTempo(binding.txtTempo, binding.txtPeriodo)
+            if (isPausado) {
+                // SE O CRONOMETRO ESTAVA PAUSADO, INICIA O CRONOMETRO
+                contarTempo(binding.txtTempo, binding.txtPeriodo)
+                binding.btnPlay.text = "PAUSAR PARTIDA"
+                isPausado = false
+            }
+            else {
+                // SE O CRONOMETRO ESTAVA RODANDO, PAUSA O CRONOMETRO
+                timerPartida.cancel() // Pausa o cronômetro atual
+                binding.btnPlay.text = "INICIAR PARTIDA"
+                isPausado = true
+            }
+        }
 
-        binding.btnPause.setOnClickListener{ pausarTempo() }
-
+        // INICIALIZANDO 'partidaDAO'
+        partidaDAO = PartidaDAO(this)
         binding.btnSalvar.setOnClickListener { salvarDados() }
 
+        // BOTAO QUE RESETA O CRONOMETRO DA PARTIDA
+        binding.btnPlay.setOnLongClickListener {
+            resetCronometro()
+            // Retorna true para indicar que o evento foi tratado
+            true
+        }
+
+        // BOTAO PARA VOLTAR PARA TELA ANTERIOR
         binding.btnVoltar.setOnClickListener { finish() }
     }
 
@@ -154,14 +182,16 @@ class PlacarActivity : AppCompatActivity() {
         }
     }
 
+    // FUNÇÃO QUE CONTROLA O CRONOMETRO DA PARTIDA
     private fun contarTempo(txtTempo: TextView, txtPeriodo: TextView) {
-
         txtPeriodo .text = "1º TEMPO"
         if (tempoAtual == 2) txtPeriodo .text = "2º TEMPO"
 
-        timerPartida = object : CountDownTimer(tempoJogo, 1000) {
+        timerPartida = object : CountDownTimer(tempoRestante, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
+                tempoRestante = millisUntilFinished // ATUALIZA O TEMPO RESTANTE
+
                 val minutos = millisUntilFinished / 60000
 
                 val segundos = (millisUntilFinished % 60000) / 1000
@@ -175,22 +205,47 @@ class PlacarActivity : AppCompatActivity() {
                     // MUDA O TEMPO PARA O 2º TEMPO
                     tempoAtual = 2
 
+                    tempoRestante = tempoJogo // RESETA TEMPO RESTANTE PARA RODA O SEGUNDO TEMPO
+
                     // INICIA O TIMER NOVAMENTE
                     contarTempo(txtTempo, txtPeriodo)
                 }
                 else {
                     // FINALIZA O JOGO E SALVA O PLACAR
-                    //saveGameResult()
+                    salvarDados()
 
                     // ENCERRA ESSA ACTIVITY E VOLTA PARA A ACTIVITY ANTERIOR
-                    finish()
+                    //finish()
                 }
             }
         }.start()
     }
 
-    private fun pausarTempo() {
-        timerPartida.cancel()
+    // FUNÇÃO QUE RESETA O CRONOMETRO DA PARTIDA E O PERIODO DO JOGO
+    // Função para resetar o cronômetro
+    private fun resetCronometro() {
+        // SE TIVER TEMPO RODANDO
+        if (timerPartida != null) {
+            // CANCELA O CRONOMETRO ATUAL
+            timerPartida.cancel()
+        }
+        // RESETA O TEMPO RESTANTE PARA O VALOR INICIAL
+        tempoRestante = tempoJogo
+
+        // RESETA O TEXTO DO CRONOMETRO
+        binding.txtTempo.text = String.format("%02d:%02d", tempoJogo / 60000, (tempoJogo % 60000) / 1000)
+
+        // RESETA O PERIODO DO JOGO
+        binding.txtPeriodo.text = "1º TEMPO"
+
+        // RESETA VALOR DO PERIODO DE JOGO
+        tempoAtual = 1
+
+        // ATUALIZA O TEXTO DO BOTAO
+        binding.btnPlay.text = "INICIA PARTIDA"
+
+        // DEFINE CRONOMETRO COMO PAUSADO
+        isPausado = true
     }
 
     // ADICIONAR VALORES AO HISTORICO
@@ -204,35 +259,42 @@ class PlacarActivity : AppCompatActivity() {
     }
 
     private fun salvarDados() {
-        val nomeTimeA = binding.txtTimeA.text.toString()
-        val nomeTimeB= binding.txtTimeB.text.toString()
-        val pontoTimeA = binding.txtPontoA.text.toString()
-        val pontoTimeB= binding.txtPontoB.text.toString()
+        // PEGANDO DATA E HORA ATUAL
+        val dataHoraAtual = LocalDateTime.now()
 
-        val dadosPartida = JSONObject()
-        dadosPartida.put("nome_time_a", nomeTimeA)
-        dadosPartida.put("nome_time_b", nomeTimeB)
-        dadosPartida.put("ponto_time_a", pontoTimeA)
-        dadosPartida.put("ponto_time_b", pontoTimeB)
+        // FORMATANDO O DIA DA SEMANA
+        val diaDaSemana = dataHoraAtual.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale("pt", "BR"))
 
-        // Usando getSharedPreferences para armazenar os dados
-        val sharedPref = getSharedPreferences(getString(R.string.dados), Context.MODE_PRIVATE)
+        // FORMATANDO A DATA
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm")
+        val dataFormatada = dataHoraAtual.format(formatter)
 
-        val editor = sharedPref.edit()
+        // JUNTANDO AS PARTES
+        val resultado = "$diaDaSemana, $dataFormatada"
 
-        val historicoStr = sharedPref.getString("historico", null)
-        var historioJSONArray = JSONArray()
-        if (historicoStr != null){
-            historioJSONArray = JSONArray(historicoStr)
-        }
+        val ntimeA = binding.txtTimeA.text.toString()
+        val pTimeA = binding.txtPontoA.text.toString().toInt()
 
-        historioJSONArray.put(dadosPartida)
+        val nTimeB= binding.txtTimeB.text.toString()
+        val pTimeB= binding.txtPontoB.text.toString().toInt()
 
-        editor.putString("historico", historioJSONArray.toString())
+        val partida = Partida(nomeTimeA =ntimeA, pontoTimeA =pTimeA, nomeTimeB =nTimeB, pontoTimeB =pTimeB, dataPartida =resultado)
+        println("PARTIDA = $partida")
 
-        editor.apply()
+        partidaDAO.insert(partida)
 
-        println(historicoStr)
+        // CRIANDO INTENT
+        val intent = Intent()
 
+        // SETANDO isClosed COMO TRUE
+        intent.putExtra("isClosed", true)
+
+        // DEFININDO O RESULTADO DA ATIVIDADE
+        setResult(RESULT_OK, intent)
+
+        // FINALIZA A ACTIVITY
+        finish()
     }
+
+
 }

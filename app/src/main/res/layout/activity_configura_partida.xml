@@ -5,79 +5,110 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient"
+    android:background="#00124C"
+    android:backgroundTint="#00124C"
     tools:context=".ConfiguraPartidaActivity">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="100dp"
+        android:text="ESCOLHA OS NOMES DOS\nTIMES QUE IRÃO JOGAR"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.38"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <TextView
             android:id="@+id/txtTimeUM"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1º Time"
+            android:layout_marginBottom="5sp"
+            android:text="TIME A"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/lblTimeUm"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
+            android:background="@drawable/button_border"
             android:backgroundTint="@color/white"
             android:ems="10"
+            android:hint="Brasil"
             android:inputType="text"
-            android:text="Name"
-            android:textColor="@color/white" />
+            android:padding="15sp"
+            android:textColor="@color/white"
+            android:textColorHint="#C1C1C1"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txtTimeDois"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2º Time"
+            android:layout_marginBottom="5sp"
+            android:text="TIME B"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/lblTimeDois"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20sp"
+            android:layout_marginBottom="30sp"
+            android:background="@drawable/button_border"
             android:backgroundTint="@color/white"
             android:ems="10"
+            android:hint="Argentina"
             android:inputType="text"
-            android:text="Name"
-            android:textColor="@color/white" />
+            android:padding="15sp"
+            android:textColor="@color/white"
+            android:textColorHint="#C1C1C1"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btnIniciarPlacar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="15sp"
             android:background="@drawable/botao_redondo"
             android:text="Iniciar Partida"
             android:textColor="#142359"
-            android:textSize="20sp" />
-    </LinearLayout>
+            android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/btnVoltar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/button_border"
-        android:text="Voltar"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/btnVoltar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_border"
+            android:text="Voltar"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
